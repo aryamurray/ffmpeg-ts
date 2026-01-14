@@ -20,6 +20,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:integration": "vitest run tests/integration",
+    "download-test-video": "bun scripts/download-test-video.ts",
+    "pretest:integration": "bun scripts/download-test-video.ts",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "bun run build"
   },

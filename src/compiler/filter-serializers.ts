@@ -27,10 +27,14 @@ export function serializeVideoFilter(filter: VideoFilter): string {
   switch (filter.kind) {
     case "scale": {
       const parts: string[] = [];
-      const w = filter.width ?? -1;
-      const h = filter.height ?? -1;
-      parts.push(`w=${w}`);
-      parts.push(`h=${h}`);
+      // Use -2 instead of -1 to ensure dimensions are divisible by 2 (required for h264/h265)
+      const w = filter.width ?? -2;
+      const h = filter.height ?? -2;
+      // When one dimension is set and the other is -1, convert to -2 for codec compatibility
+      const effectiveW = w === -1 ? -2 : w;
+      const effectiveH = h === -1 ? -2 : h;
+      parts.push(`w=${effectiveW}`);
+      parts.push(`h=${effectiveH}`);
       if (filter.algorithm) {
         parts.push(`flags=${filter.algorithm}`);
       }

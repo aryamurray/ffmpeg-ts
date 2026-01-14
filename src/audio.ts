@@ -3,6 +3,7 @@ import { MediaChain } from "./core/media-chain.js";
 
 /**
  * Create a new audio processing chain
+ * This is an alias for video() - it creates a standard media chain
  *
  * @example
  * ```ts
@@ -13,10 +14,7 @@ import { MediaChain } from "./core/media-chain.js";
  * ```
  */
 export function audio(input: string | Readable): MediaChain {
-  // Create chain without video
-  const chain = new MediaChain().input(input);
-  chain.mute(); // Actually we want to disable video, not audio - let me fix this
-  return chain;
+  return new MediaChain().input(input);
 }
 
 /**
@@ -25,7 +23,9 @@ export function audio(input: string | Readable): MediaChain {
  */
 export function audioOnly(input: string | Readable): MediaChain {
   const chain = new MediaChain().input(input);
-  // For audio-only, we'll handle this at the compiler level
-  // by not mapping video streams
+  // Disable video streams for audio-only output
+  for (const stream of chain.toGraph().videoStreams) {
+    stream.disabled = true;
+  }
   return chain;
 }
