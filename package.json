@@ -1,15 +1,46 @@
 {
   "name": "ffmpeg-ts",
-  "module": "index.ts",
+  "version": "0.1.0",
+  "description": "Sharp-style TypeScript SDK for FFmpeg - fluent, type-safe video/audio processing",
   "type": "module",
-  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:integration": "vitest run tests/integration",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "keywords": [
+    "ffmpeg",
+    "video",
+    "audio",
+    "media",
+    "processing",
+    "typescript",
+    "fluent",
+    "sharp"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "devDependencies": {
-    "@types/bun": "latest",
     "@types/node": "^25.0.8",
     "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.17"
-  },
-  "peerDependencies": {
-    "typescript": "^5.9.3"
   }
 }
